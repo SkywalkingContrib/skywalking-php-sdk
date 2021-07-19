@@ -15,32 +15,20 @@
  *
  */
 
-
-#ifndef SKYWALKING_SKY_UTILS_H
-#define SKYWALKING_SKY_UTILS_H
+#ifndef SKYWALKING_SRC_SKY_PLUGIN_MEMCACHED_H_
+#define SKYWALKING_SRC_SKY_PLUGIN_MEMCACHED_H_
 
 #include "php_skywalking.h"
+#include "sky_utils.h"
+#include <string>
+#include <functional>
+#include <map>
+#include "span.h"
 #include "segment.h"
 
-#include <string>
+Span *sky_plugin_memcached(zend_execute_data *execute_data, const std::string &class_name, const std::string &function_name);
 
-#define SKY_IS_OBJECT(p) p != nullptr && Z_TYPE_P(p) == IS_OBJECT
+std::string sky_plugin_memcached_peer(zend_execute_data *execute_data);
 
-bool starts_with(const char *pre, const char *str);
-
-std::string get_page_request_uri();
-
-std::string get_page_request_peer();
-
-zval *sky_read_property(zval *obj, const char *property, int parent);
-
-int64_t sky_find_swoole_fd(zend_execute_data *execute_data);
-
-Segment *sky_get_segment(zend_execute_data *execute_data, int64_t request_id);
-
-std::string sky_get_class_name(zval *obj);
-
-long getUnixTimeStamp();
-
-std::string sky_json_encode(zval *parameter);
-#endif //SKYWALKING_SKY_UTILS_H
+std::string sky_plugin_memcached_key_cmd(zend_execute_data *execute_data, std::string cmd);
+#endif //SKYWALKING_SRC_SKY_PLUGIN_MEMCACHED_H_
